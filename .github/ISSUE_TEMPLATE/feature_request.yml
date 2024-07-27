@@ -1,18 +1,29 @@
-name: 🚀 Feature request
+name: :rocket: Feature request
 about: Suggest an idea for this project
 title: Support for [thing]
 labels: enhancement
 assignees: ''
-
-
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**New or affected parameter(s)/configuration(s)**
-A clear and concise description of what you want to happen.
-
-**Potential Terraform configuration**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**References**
-Add any other context or screenshots about the feature request here.
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please leave a helpful description of the feature request here.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: New or affected parameter(s)/configuration(s)
+      description: Please list the new or affected parameter(s) and/or configuration(s).
+      # placeholder: azurerm_XXXXX
+  - type: textarea
+    id: config
+    attributes:
+      label: Potential Terraform Configuration
+      description: Please provide an example of what the new resource or enhancement could look like in a Terraform config.
+      render: hcl
+  - type: input
+    attributes:
+      label: References
+      description: Add any other context or screenshots about the feature request here.
+      placeholder: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
