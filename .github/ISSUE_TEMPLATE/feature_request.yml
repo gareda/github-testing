@@ -30,7 +30,6 @@ body:
           tags                = azurerm_resource_group.rg.tags
           example_parameter   = "something" # Example of parameter
         }
-
   - type: input
     attributes:
       label: References
