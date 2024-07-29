@@ -21,12 +21,7 @@ body:
       label: Potential Terraform Configuration
       description: Please provide an example of what the new resource or enhancement could look like in a Terraform config.
       render: hcl
-      placeholder: |
-        resource "azurerm_resource_group" "rg" {
-          name     = "example"
-          location = "Spain Central"
-        }
-        
+      placeholder: |        
         module "example" {
           source              = "aztfm/example/azurerm"
           version             = ">=1.0.0"
