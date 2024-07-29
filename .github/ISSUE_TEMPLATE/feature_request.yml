@@ -26,3 +26,11 @@ body:
       label: References
       description: Add any other context or screenshots about the feature request here.
       placeholder: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of our software are you running?
+      options:
+        - 1.0.2 (Default)
+        - 1.0.3 (Edge)
