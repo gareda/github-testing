@@ -14,7 +14,7 @@ body:
     attributes:
       label: New or affected parameter(s)/configuration(s)
       description: Please list the new or affected parameter(s) and/or configuration(s).
-      # placeholder: azurerm_XXXXX
+      placeholder: parameter / parameter.subparameter
   - type: textarea
     id: config
     attributes:
