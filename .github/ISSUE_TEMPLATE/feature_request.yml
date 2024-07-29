@@ -4,7 +4,7 @@ title: Support for [thing]
 labels: enhancement
 assignees: []
 body:
-  - type: textarea
+  - type: markdown
     id: description
     attributes:
       label: Description
