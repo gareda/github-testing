@@ -28,7 +28,7 @@ body:
     attributes:
       label: Affected component
       description: Please list the affected resources and/or data sources.
-      placeholder: "resource: azurerm_xxxxx / variable: name / output: id / ..."
+      placeholder: "resource: azurerm_xxxxx / parameter: name / output: id / ..."
 
   - type: textarea
     id: config
