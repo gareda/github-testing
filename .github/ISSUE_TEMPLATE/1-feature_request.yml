@@ -11,17 +11,17 @@ body:
     attributes:
       label: Description
       description: Please leave a helpful description of the feature request here.
-    
+
   - type: input
     attributes:
-      label: New or affected parameter(s)/configuration(s)
+      label: New or affected parameter(s) / configuration(s)
       description: Please list the new or affected parameter(s) and/or configuration(s).
       placeholder: parameter / parameter.subparameter
 
   - type: textarea
     id: config
     attributes:
-      label: Potential Terraform Configuration
+      label: Potential terraform configuration
       description: Please provide an example of what the new resource or enhancement could look like in a Terraform config.
       render: hcl
       placeholder: |

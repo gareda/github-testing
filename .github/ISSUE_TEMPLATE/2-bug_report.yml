@@ -9,7 +9,7 @@ body:
     validations:
       required: true
     attributes:
-      label: Module Version
+      label: Module version
       description: Which module version are you using?
       placeholder: 1.0.0
 
@@ -21,4 +21,20 @@ body:
       label: Affected component
       description: Please list the affected resources and/or data sources.
       placeholder: "resource: azurerm_xxxxx / variable: name / output: id / ..."
-    
+
+  - type: textarea
+    id: config
+    validations:
+      required: true
+    attributes:
+      label: Terraform configuration files
+      description: Please provide a minimal Terraform configuration that can reproduce the issue.
+      render: hcl
+
+  - type: textarea
+    id: debug
+    validations:
+      required: true
+    attributes:
+      label: Debug output
+      render: shell
