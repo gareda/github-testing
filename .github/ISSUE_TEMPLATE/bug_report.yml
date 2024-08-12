@@ -1,0 +1,24 @@
+name: "🐛 Bug Report"
+description: I have found something that isn't working as expected.
+title: Support for [thing]
+labels: [bug]
+assignees: [gareda]
+body:
+  - type: input
+    id: module
+    validations:
+      required: true
+    attributes:
+      label: Module Version
+      description: Which module version are you using?
+      placeholder: 1.0.0
+
+  - type: input
+    id: resource
+    validations:
+      required: true
+    attributes:
+      label: Affected component
+      description: Please list the affected resources and/or data sources.
+      placeholder: "resource: azurerm_xxxxx / variable: name / output: id / ..."
+    

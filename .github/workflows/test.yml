@@ -1,45 +1,65 @@
-name: pre-commit-terraform
+name: "pre-commit"
 
 on:
   pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
-  pre-commit:
+  main:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/antonbabenko/pre-commit-terraform:latest # latest used here for simplicity, not recommended
-    defaults:
-      run:
-        shell: bash
+
+    permissions:
+      pull-requests: write
+      issues: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
+          terraform_version: "~>1.9.0"
 
-      - run: |
-          git config --global --add safe.directory $GITHUB_WORKSPACE
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
-
-      - name: Get changed files
-        id: file_changes
-        run: |
-          export DIFF=$(git diff --name-only origin/${{ github.base_ref }} ${{ github.sha }})
-          echo "Diff between ${{ github.base_ref }} and ${{ github.sha }}"
-          echo "files=$( echo "$DIFF" | xargs echo )" >> $GITHUB_OUTPUT
-
-      - name: fix tar dependency in alpine container image
-        run: |
-          apk --no-cache add tar
-          # check python modules installed versions
-          python -m pip freeze --local
-
-      - name: Cache pre-commit since we use pre-commit from container
-        uses: actions/cache@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-3|${{ hashFiles('.pre-commit-config.yaml') }}
+          python-version: 3.x
 
-      - name: Execute pre-commit
-        run: |
-          pre-commit run --color=always --show-diff-on-failure --files ${{ steps.file_changes.outputs.files }}
+      - name: Setup Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install dependencies
+        run: brew install tflint terraform-docs
+
+      - uses: pre-commit/action@v3.0.1
+        id: plan
+        continue-on-error: true
+
+      - name: Update Pull Request
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.USER_TOKEN }}
+          script: |
+            const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
